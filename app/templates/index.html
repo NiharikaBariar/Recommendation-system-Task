@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4eee7">
+  <title>Screenova | Find your next film</title>
+  <style>
+    :root { --ink: #241e1b; --muted: #746a64; --space-ink: #fff9f2; --space-muted: #e1d8f3; --accent: #ff8a68; --accent-dark: #d95755; --paper: rgba(255, 252, 248, .94); --line: #e7dbd1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #110d2c; }
+    body::before { content: ""; position: fixed; inset: 0; z-index: -2; background: radial-gradient(ellipse at 12% 18%, rgba(239, 93, 122, .72) 0, transparent 30%), radial-gradient(ellipse at 88% 12%, rgba(91, 91, 232, .72) 0, transparent 32%), radial-gradient(ellipse at 70% 92%, rgba(231, 119, 62, .55) 0, transparent 34%), linear-gradient(135deg, #171344 0%, #26124a 42%, #100c2b 100%); }
+    body::after { content: ""; position: fixed; inset: 0; z-index: -1; opacity: .72; pointer-events: none; background-image: radial-gradient(circle at 8% 23%, #fff 0 1px, transparent 1.5px), radial-gradient(circle at 22% 76%, rgba(255,255,255,.9) 0 1px, transparent 1.5px), radial-gradient(circle at 43% 15%, rgba(255,216,107,.9) 0 1px, transparent 1.5px), radial-gradient(circle at 63% 67%, #fff 0 1px, transparent 1.5px), radial-gradient(circle at 82% 34%, rgba(255,255,255,.9) 0 1px, transparent 1.5px), radial-gradient(circle at 94% 82%, rgba(255,216,107,.8) 0 1px, transparent 1.5px); background-size: 260px 220px, 310px 280px, 370px 310px, 290px 250px, 330px 270px, 410px 350px; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 30px 0 72px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 68px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--space-ink); font-weight: 800; letter-spacing: -.04em; font-size: 1.25rem; text-shadow: 0 2px 18px rgba(0,0,0,.28); }
+    .logo-mark { position: relative; display: grid; place-items: center; width: 38px; height: 38px; overflow: hidden; border-radius: 13px; color: #fffaf4; background: linear-gradient(135deg, #ee7652, #9a2f7d 58%, #34256f); box-shadow: 0 8px 18px rgba(154,47,125,.25); transform: rotate(-8deg); }
+    .logo-mark::before { content: ""; position: absolute; width: 48px; height: 18px; border: 2px solid rgba(255,255,255,.72); border-radius: 50%; transform: rotate(-32deg); }
+    .logo-mark::after { content: ""; position: absolute; top: 5px; right: 6px; width: 5px; height: 5px; border-radius: 50%; background: #ffd86b; box-shadow: -20px 24px 0 rgba(255,255,255,.8); }
+    .logo-letter { position: relative; z-index: 1; font-family: Georgia, serif; font-size: 1.7rem; font-style: italic; font-weight: 700; line-height: 1; transform: rotate(8deg); }
+    nav { color: var(--muted); font-size: .9rem; }
+    .hero { max-width: 760px; margin-bottom: 34px; }
+    .eyebrow { color: #ffb28f; font-size: .76rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; text-shadow: 0 2px 14px rgba(0,0,0,.3); }
+    h1 { max-width: 700px; margin: 12px 0 16px; color: var(--space-ink); font-family: Georgia, serif; font-size: clamp(3rem, 7vw, 6.2rem); line-height: .94; letter-spacing: -.07em; font-weight: 500; text-shadow: 0 4px 24px rgba(0,0,0,.3); }
+    .hero p { color: var(--space-muted); font-size: 1.08rem; line-height: 1.7; max-width: 610px; text-shadow: 0 2px 12px rgba(0,0,0,.28); }
+    .panel { background: var(--paper); border: 1px solid rgba(255,255,255,.8); border-radius: 24px; padding: clamp(22px, 4vw, 38px); box-shadow: 0 20px 70px rgba(83, 57, 43, .11); backdrop-filter: blur(10px); }
+    .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 22px; }
+    h2 { margin: 0; font-family: Georgia, serif; font-size: 1.8rem; font-weight: 500; }
+    .hint, small { color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    label { display: grid; gap: 7px; color: var(--muted); font-size: .78rem; font-weight: 750; letter-spacing: .04em; }
+    input, select { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 12px 13px; color: var(--ink); background: rgba(255,255,255,.72); font: inherit; }
+    select[multiple] { min-height: 95px; }
+    .wide { grid-column: span 2; }
+    .actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 23px; }
+    button { cursor: pointer; border: 0; border-radius: 999px; padding: 13px 22px; color: #fff; background: var(--accent); font: inherit; font-weight: 800; box-shadow: 0 8px 20px rgba(182,72,53,.23); }
+    button:hover { background: var(--accent-dark); }
+    button:disabled { opacity: .6; cursor: wait; }
+    #results { margin-top: 52px; }
+    .result-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .card { padding: 23px; background: rgba(255,255,255,.77); border: 1px solid rgba(255,255,255,.85); border-radius: 18px; box-shadow: 0 10px 35px rgba(83, 57, 43, .07); }
+    .card-top { display: flex; justify-content: space-between; gap: 12px; }
+    .rank { color: var(--accent); font-size: .8rem; font-weight: 850; }
+    .card h3 { margin: 7px 0 7px; font-family: Georgia, serif; font-size: 1.35rem; font-weight: 600; }
+    .meta { color: var(--muted); font-size: .86rem; }
+    .why { margin: 19px 0; line-height: 1.55; }
+    .signals { color: var(--muted); font-size: .75rem; border-top: 1px solid var(--line); padding-top: 13px; }
+    .error { color: var(--accent-dark); background: #fff1ed; border-radius: 12px; padding: 15px; }
+    .validation { display: none; margin-top: 16px; color: var(--accent-dark); font-size: .9rem; }
+    .validation.visible { display: block; }
+    @media (max-width: 760px) { .wrap { width: min(100% - 24px, 620px); padding-top: 18px; } header { margin-bottom: 42px; } nav { display: none; } .grid, .cards { grid-template-columns: 1fr; } .wide { grid-column: auto; } .actions, .result-head { align-items: stretch; flex-direction: column; } button { width: 100%; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header><div class="brand"><span class="logo-mark" aria-hidden="true"><span class="logo-letter">S</span></span>Screenova</div></header>
+    <section class="hero">
+      <div class="eyebrow">Your personal screening room</div>
+      <h1>Find a film worth staying up for.</h1>
+      <p>Shape your watchlist with familiar film filters, then let transparent collaborative recommendations reveal what belongs in your next double feature.</p>
+    </section>
+    <form class="panel" id="recommendation-form">
+      <div class="panel-head"><h2>Set your scene</h2><span class="hint">Choose at least one filter</span></div>
+      <div class="grid">
+        <label>MovieLens user ID <input id="user" type="number" min="1" max="943" placeholder="e.g. 42"></label>
+        <label>Seed movie ID <input id="seed" type="number" min="1" placeholder="Optional"></label>
+        <label>From year <input id="yearFrom" type="number" min="1900" max="2100" placeholder="1900"></label>
+        <label>To year <input id="yearTo" type="number" min="1900" max="2100" placeholder="2026"></label>
+        <label>Minimum rating <input id="rating" type="number" min="0" max="5" step=".1" placeholder="0 - 5"></label>
+        <label>Minimum votes <input id="votes" type="number" min="0" placeholder="e.g. 50"></label>
+        <label class="wide">Genres <select id="genres" multiple>
+          <option>Action</option><option>Adventure</option><option>Animation</option><option>Children's</option><option>Comedy</option><option>Crime</option><option>Documentary</option><option>Drama</option><option>Fantasy</option><option>Horror</option><option>Mystery</option><option>Romance</option><option>Sci-Fi</option><option>Thriller</option><option>War</option><option>Western</option>
+        </select></label>
+        <label>Results <input id="limit" type="number" min="1" max="20" value="8"></label>
+      </div>
+      <div class="actions"><span class="hint">Ratings and votes are calculated from the available MovieLens catalogue.</span><button id="submit" type="submit">Build my watchlist</button></div>
+      <div id="validation" class="validation" role="alert"></div>
+    </form>
+    <section id="results" aria-live="polite"></section>
+  </main>
+  <script>
+    const value = id => document.getElementById(id).value;
+    const numberOrNull = id => value(id) ? Number(value(id)) : null;
+    const escapeHtml = text => String(text).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));
+    document.getElementById('recommendation-form').addEventListener('submit', event => {
+      event.preventDefault();
+      if (!validateForm()) return;
+      recommend();
+    });
+    function validateForm() {
+      const form = document.getElementById('recommendation-form');
+      const message = document.getElementById('validation');
+      const fields = ['user', 'seed', 'yearFrom', 'yearTo', 'rating', 'votes'];
+      const hasCriteria = fields.some(id => value(id).trim()) || document.getElementById('genres').selectedOptions.length > 0;
+      let error = hasCriteria ? '' : 'Choose at least one filter before building your watchlist.';
+      const yearFrom = numberOrNull('yearFrom');
+      const yearTo = numberOrNull('yearTo');
+      if (!error && yearFrom !== null && yearTo !== null && yearFrom > yearTo) {
+        error = 'The starting year must be earlier than or equal to the ending year.';
+      }
+      if (!error && !form.checkValidity()) {
+        error = 'Check the highlighted values and enter numbers within the allowed ranges.';
+      }
+      message.textContent = error;
+      message.classList.toggle('visible', Boolean(error));
+      if (error) {
+        const invalid = form.querySelector(':invalid');
+        if (invalid) invalid.focus();
+      }
+      return !error;
+    }
+    async function recommend() {
+      const button = document.getElementById('submit');
+      button.disabled = true;
+      button.textContent = 'Projecting recommendations…';
+      const request = {
+        user_id: numberOrNull('user'),
+        seed_movie_id: numberOrNull('seed'),
+        year_from: numberOrNull('yearFrom'),
+        year_to: numberOrNull('yearTo'),
+        min_rating: numberOrNull('rating'),
+        min_votes: numberOrNull('votes'),
+        genres: [...document.getElementById('genres').selectedOptions].map(option => option.value),
+        limit: numberOrNull('limit') || 8
+      };
+      try {
+        const response = await fetch('/api/recommendations', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(request) });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || 'Unable to rank this watchlist.');
+        const strategy = data.strategy.replaceAll('_', ' ');
+        const cards = data.recommendations.map((item, index) => `<article class="card"><div class="card-top"><span class="rank">0${index + 1}</span><span class="meta">${item.movie.year || 'Classic'} · ★ ${item.movie.rating || item.score}</span></div><h3>${escapeHtml(item.movie.title)}</h3><div class="meta">${escapeHtml(item.movie.genres.join(' · '))} · ${item.movie.votes || 0} votes</div><p class="why"><b>Why this film:</b> ${escapeHtml(item.explanation)}</p><div class="signals">Score ${item.score} · ${Object.entries(item.signals).map(([key, signal]) => `${escapeHtml(key.replaceAll('_', ' '))}: ${signal}`).join(' · ')}</div></article>`).join('');
+        const empty = '<p class="error">No films matched these filters. Try widening the year range, lowering the minimum rating or votes, or removing a genre.</p>';
+        document.getElementById('results').innerHTML = `<div class="result-head"><div><div class="eyebrow">The feature presentation</div><h2>Your recommendations</h2></div><span class="hint">${escapeHtml(strategy)}</span></div>${cards ? `<div class="cards">${cards}</div>` : empty}`;
+      } catch (error) {
+        document.getElementById('results').innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`;
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Build my watchlist';
+      }
+    }
+  </script>
+</body>
+</html>
