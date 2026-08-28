@@ -54,6 +54,12 @@ docker run --rm -p 8000:8000 -v ${PWD}\data\raw:/app/data/raw screenova
 
 ### Managed hosting
 
-Deploy the repository to a container-capable service such as Azure Container Apps, Google Cloud Run, AWS App Runner, or Render. Build with the included `Dockerfile`, provide `data/raw/ml-100k` through a persistent volume or release artifact, and set the platform `PORT` environment variable. Keep dataset acquisition outside the image and store credentials only in the platform secret manager.
+Deploy the repository to a container-capable service such as Azure Container Apps, Google Cloud Run, AWS App Runner, or Render. The included `Dockerfile` downloads the dataset at container startup when it is not already mounted. Configure these secret environment variables in the hosting platform:
+
+- `KAGGLE_USERNAME`: your Kaggle username
+- `KAGGLE_KEY`: the API token from your Kaggle account
+- `KAGGLE_DATASET` (optional): defaults to `bhatvikas/movielens-100k-dataset`
+
+Set the platform `PORT` environment variable if required. Never commit `kaggle.json`, dataset files, or API credentials. For persistent storage, mount `/app/data` so restarts do not need to download the dataset again.
 
 For production, add a persistent feature/data store, cache the in-memory model warm-up, restrict CORS, add structured logs and metrics, and pin a supported Python base image. See [the engineering guide](docs/ENGINEERING_GUIDE.md) for the system design and roadmap.
